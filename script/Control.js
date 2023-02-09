@@ -85,5 +85,3 @@ class Control {
     document.addEventListener("keyup", keyUpHandler);
   }
 }
-
-export default Control;

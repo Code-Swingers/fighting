@@ -1,4 +1,4 @@
-export default class Player {
+class Player {
   constructor({ ctx, color, x, y, control }) {
     this.ctx = ctx;
     this.color = color;
