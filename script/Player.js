@@ -28,7 +28,7 @@ class Player {
       row.forEach((item, itemIndex) => {
         if (!item) return
 
-        const sprite = PIXI.Sprite.from(`/images/${this.color}-block.png`);
+        const sprite = PIXI.Sprite.from(`./images/${this.color}-block.png`);
         sprite.x = this.size * itemIndex;
         sprite.y = this.size * rowIndex;
         this.container.addChild(sprite);
