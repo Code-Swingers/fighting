@@ -69,11 +69,11 @@ app.ticker.add((delta) => {
 
   if (control.forward) {
     greenPlayer.changeShape([
-      [1, 1, 1, 1],
+      [1, 1, 0, 0],
+      [0, 1, 1, 0],
       [1, 1, 0, 0],
       [1, 1, 0, 0],
       [1, 1, 0, 0],
-      [0, 0, 0, 0],
     ]);
   } else {
     greenPlayer.changeShape([
