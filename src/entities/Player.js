@@ -8,11 +8,35 @@ export default class Player {
     this.y = y;
     this.control = control;
     this.hasCollision = false;
+
+    // prettier-ignore
+    this.form = [
+      [1, 1],
+      [1, 1],
+      [1, 1],
+      [1, 1],
+      [1, 1],
+    ];
   }
 
   draw() {
-    this.ctx.fillStyle = this.color;
-    this.ctx.fillRect(this.x, this.y, this.size, this.size);
+    this.form.forEach((row, rowIndex) => {
+      row.forEach((cell, cellIndex) => {
+        if (cell) {
+          this.ctx.fillStyle = "white";
+          this.ctx.rect(
+            this.x + cellIndex * this.size,
+            this.y + rowIndex * this.size,
+            this.size,
+            this.size
+          );
+          this.ctx.fill();
+
+          this.ctx.strokeStyle = this.color;
+          this.ctx.stroke();
+        }
+      });
+    });
   }
 
   move() {
