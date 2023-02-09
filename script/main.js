@@ -25,28 +25,13 @@ class Player {
     this.renderShape();
   }
 
-  initialSprites() {
-    for (let i = 0; i < 10; i++) {
-      
-    }
-  }
-
   renderShape() {
-    // console.log('RENDER')
+    this.container.removeChildren();
     this.shape.forEach((row, rowIndex) => {
       row.forEach((item, itemIndex) => {
-        if (!item) {
-          const prevSprite = this.container.children.find((sprite) => sprite.id === `${rowIndex}${itemIndex}`);
-
-          if (prevSprite) {
-            prevSprite.destroy({ children: true });
-          }
-
-          return;
-        };
+        if (!item) return
 
         const sprite = PIXI.Sprite.from(`/images/${this.color}-block.png`);
-        sprite.id = `${rowIndex}${itemIndex}`;
         sprite.x = this.size * itemIndex;
         sprite.y = this.size * rowIndex;
         this.container.addChild(sprite);
@@ -86,9 +71,9 @@ app.ticker.add((delta) => {
     greenPlayer.changeShape([
       [1, 1, 1, 1],
       [1, 1, 0, 0],
-      [1, 0, 0, 0],
-      [1, 0, 0, 0],
       [1, 1, 0, 0],
+      [1, 1, 0, 0],
+      [0, 0, 0, 0],
     ]);
   } else {
     greenPlayer.changeShape([
