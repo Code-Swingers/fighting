@@ -55,9 +55,20 @@ class Player {
     }
 
     if (this.control.state[punch]) {
+      this.speedX = 0;
       this.changeShape([
         [1, 1, 0, 0],
         [0, 1, 1, 0],
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
+      ]);
+    }
+
+    if (!this.control.state[punch] && !this.control.isIdle()) {
+      this.changeShape([
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
         [1, 1, 0, 0],
         [1, 1, 0, 0],
         [1, 1, 0, 0],
