@@ -1,7 +1,6 @@
 const app = new PIXI.Application({ width: 1000, height: 500, background: 'white' });
 document.body.appendChild(app.view);
 
-
 const greenControl = new Control({
   left: 'a',
   right: 'd',
@@ -16,8 +15,6 @@ const redControl = new Control({
 });
 const greenPlayer = new Player({color: 'green', x: 100, y: 100, control: greenControl});
 const redPlayer = new Player({color: 'red', x: 300, y: 100, control: redControl});
-const speed = 5;
-
 
 app.ticker.add((delta) => {
   greenPlayer.move();

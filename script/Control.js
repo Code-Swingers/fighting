@@ -9,9 +9,19 @@ class Control {
     this.addKeyboardListener();
   }
 
-  resetState() {
-    this.isIdle = true;
+  isIdle() {
+    let isIdle = true;
 
+    this.keys.forEach((key) => {
+      if (this.state[key]) {
+        isIdle = false;
+      }
+    });
+
+    return isIdle;
+  }
+
+  resetState() {
     this.keys.forEach((key) => {
       this.state[key] = false;
     });
@@ -19,16 +29,14 @@ class Control {
 
   addKeyboardListener() {
     const handleKeyDown = (event) => {
-      this.isIdle = false;
-
       this.state[event.key] = true;
     };
 
-    const handleKeyUp = () => {
-      this.resetState();
+    const handleKeyUp = (event) => {
+      this.state[event.key] = false;
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
   }
 }

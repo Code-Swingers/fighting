@@ -1,10 +1,11 @@
 class Player {
-  constructor({ color, x, y, control }) {
+  constructor({ color, x, y, control, speed = 3 }) {
     this.container = new PIXI.Container();
     this.control = control;
     this.color = color;
     this.container.x = x;
     this.container.y = y;
+    this.speed = speed;
 
     this.size = 45;
     this.speedX = 0;
@@ -46,11 +47,11 @@ class Player {
   move() {
     const { left, right, punch, kick } = this.control.keyMapping;
     if (this.control.state[left]) {
-      this.speedX = -speed;
+      this.speedX = -this.speed;
     }
 
     if (this.control.state[right]) {
-      this.speedX = speed;
+      this.speedX = this.speed;
     }
 
     if (this.control.state[punch]) {
@@ -63,7 +64,7 @@ class Player {
       ]);
     }
 
-    if (this.control.isIdle) {
+    if (this.control.isIdle()) {
       this.speedX = 0;
 
       this.changeShape([
