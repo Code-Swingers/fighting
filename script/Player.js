@@ -1,59 +1,80 @@
 class Player {
-  constructor({ ctx, color, x, y, control }) {
-    this.ctx = ctx;
-    this.color = color;
-    this.size = 50;
-    this.speedX = 0;
-    this.x = x;
-    this.y = y;
+  constructor({ color, x, y, control }) {
+    this.container = new PIXI.Container();
     this.control = control;
+    this.color = color;
+    this.container.x = x;
+    this.container.y = y;
+
+    this.size = 45;
+    this.speedX = 0;
     this.hasCollision = false;
 
-    // prettier-ignore
-    this.form = [
-      [1, 1],
-      [1, 1],
-      [1, 1],
-      [1, 1],
-      [1, 1],
+    this.shape = [
+      [1, 1, 0, 0],
+      [1, 1, 0, 0],
+      [1, 1, 0, 0],
+      [1, 1, 0, 0],
+      [1, 1, 0, 0],
     ];
+
+    this.renderShape();
   }
 
-  draw() {
-    this.form.forEach((row, rowIndex) => {
-      row.forEach((cell, cellIndex) => {
-        if (cell) {
-          this.ctx.fillStyle = "white";
-          this.ctx.rect(
-            this.x + cellIndex * this.size,
-            this.y + rowIndex * this.size,
-            this.size,
-            this.size
-          );
-          this.ctx.fill();
+  renderShape() {
+    this.container.removeChildren();
+    this.shape.forEach((row, rowIndex) => {
+      row.forEach((item, itemIndex) => {
+        if (!item) return
 
-          this.ctx.strokeStyle = this.color;
-          this.ctx.stroke();
-        }
+        const sprite = PIXI.Sprite.from(`/images/${this.color}-block.png`);
+        sprite.x = this.size * itemIndex;
+        sprite.y = this.size * rowIndex;
+        this.container.addChild(sprite);
       });
     });
+
+    app.stage.addChild(this.container);
+  }
+
+  changeShape(newShape) {
+    if (this.shape.toString() === newShape.toString()) return;
+    this.shape = newShape;
+    this.renderShape();
   }
 
   move() {
-    if (this.hasCollision) return;
-
-    if (this.control.right) {
-      this.speedX = 1;
-      this.x += this.speedX;
-    } else {
-      this.speedX = 0;
+    const { left, right, punch, kick } = this.control.keyMapping;
+    if (this.control.state[left]) {
+      this.speedX = -speed;
     }
 
-    if (this.control.left) {
-      this.speedX = -1;
-      this.x += this.speedX;
-    } else {
-      this.speedX = 0;
+    if (this.control.state[right]) {
+      this.speedX = speed;
     }
+
+    if (this.control.state[punch]) {
+      this.changeShape([
+        [1, 1, 0, 0],
+        [0, 1, 1, 0],
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
+      ]);
+    }
+
+    if (this.control.isIdle) {
+      this.speedX = 0;
+
+      this.changeShape([
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
+      ]);
+    }
+
+    this.container.x += this.speedX;
   }
 }
